@@ -17,8 +17,6 @@ require_once './data.php';
 $data = unserialize($me);
 $totalCount = count($data);
 
-
-
 function nr_cmp($a, $b)
 {
     if ((int)$a['number'] == (int)$b['number']) {
@@ -60,6 +58,11 @@ if ($dir == 'DESC') {
 
 $data = array_splice($data, $start, $limit);
 
+for ($i = 0; $i < sizeof($data); $i++) {
+    for ($j = 0; $j < 5; $j++)
+        $data[$i]['col'.$j] = 'col'.$j.'_'.$i;
+}
+
 for ($i = 0, $len = count($data); $i < $len; $i++) {
     $data[$i]['date'] = date("Y-m-d H:i:s", $data[$i]['date']);
 }
@@ -71,6 +74,8 @@ $response = array(
 
 );
 
+
+header('Content-Type:text/plain');
 
 if (function_exists('json_encode')) {
     $json = json_encode($response);

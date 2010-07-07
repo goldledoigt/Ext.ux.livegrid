@@ -860,7 +860,6 @@ Ext.extend(Ext.ux.grid.livegrid.GridView, Ext.grid.GridView, {
     // private
     onAdd : function(ds, records, index)
     {
-      console.log("onAdd");
         if (this._checkEmptyBody) {
             if (this.mainBody.dom.innerHTML == '&nbsp;') {
                 this.mainBody.dom.innerHTML = '';
@@ -1064,7 +1063,6 @@ Ext.extend(Ext.ux.grid.livegrid.GridView, Ext.grid.GridView, {
     // private
     liveBufferUpdate : function(records, options, success)
     {
-      console.log('liveBufferUpdate', this, arguments);
         if (success === true) {
             this.adjustBufferInset();
 
@@ -1487,7 +1485,6 @@ Ext.extend(Ext.ux.grid.livegrid.GridView, Ext.grid.GridView, {
      */
     updateLiveRows: function(index, forceRepaint, forceReload)
     {
-      //console.log('updateLiveRows', this, arguments);
         var inRange = this.isInRange(index);
 
         if (this.isBuffering) {
