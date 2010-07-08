@@ -434,6 +434,7 @@ Ext.extend(Ext.ux.grid.livegrid.GridView, Ext.grid.GridView, {
      */
     renderUI : function()
     {
+
         var g = this.grid;
         var dEnabled = g.enableDragDrop || g.enableDrag;
 
@@ -483,6 +484,8 @@ Ext.extend(Ext.ux.grid.livegrid.GridView, Ext.grid.GridView, {
         this._gridViewSuperclass.init.call(this, grid);
 
         grid.on('expand', this._onExpand, this);
+
+        this.addEvents("rowover", "rowout");
     },
 
     initData : function(ds, cm)
@@ -666,6 +669,23 @@ Ext.extend(Ext.ux.grid.livegrid.GridView, Ext.grid.GridView, {
     },
 
 // {{{ ----------------------dom/mouse listeners--------------------------------
+
+
+    onRowOver : function(e, t){
+        var row;
+        if((row = this.findRowIndex(t)) !== false){
+            this.addRowClass(row, 'x-grid3-row-over');
+            this.fireEvent("rowover", this, row);
+        }
+    },
+
+    onRowOut : function(e, t){
+        var row;
+        if((row = this.findRowIndex(t)) !== false && !e.within(this.getRow(row), true)){
+            this.removeRowClass(row, 'x-grid3-row-over');
+            this.fireEvent("rowout", this, row);
+        }
+    },
 
     /**
      * Tells the view to recalculate the number of rows displayable
