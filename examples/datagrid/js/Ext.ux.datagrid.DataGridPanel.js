@@ -33,7 +33,7 @@ Ext.ux.datagrid.DataGridPanel = Ext.extend(Ext.Panel, {
                 ,ref:"lockpanel"
                 ,width:0
                 ,layout:"fit"
-                ,border:false                
+                ,border:false
             }]
         });
 

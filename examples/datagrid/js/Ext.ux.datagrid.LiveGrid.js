@@ -42,7 +42,7 @@ Ext.ux.datagrid.LiveGrid = Ext.extend(Ext.ux.grid.livegrid.GridPanel, {
 
         this.store = new Ext.ux.grid.livegrid.Store({
             autoLoad:true,
-            url:"./server.php",
+            url:"./php/server.php",
             bufferSize:300,
             reader:reader,
             sortInfo:{field:"number", direction:"ASC"}
