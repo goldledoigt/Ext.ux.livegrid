@@ -28,6 +28,44 @@ Ext.onReady(function() {
     };
     */
 
+    var renderGroupHeaders = function() {
+        var h = grid.el.select("div.x-grid3-header-offset table").elements;
+        var children = [];
+        var headers = Ext.get(lockgrid.el.select("div.x-grid3-header-offset").elements[0]);
+        var table = headers.child("table");
+        console.log("headers", headers, table, table.getWidth());
+        for (var i = 0; i < grid.getColumnModel().rows.length; i++) {
+            var ih = headers.insertFirst({
+                tag:"table"
+                ,width:table.getWidth()
+                ,cellspacing:0
+                ,cellpadding:0
+                ,children:[{
+                    tag:"tr"
+                    ,cls:"x-grid3-hd-row"
+                    ,children:[{
+                        tag:"td"
+                        ,cls:"x-grid3-hd x-grid3-hd-empty x-grid3-cell x-grid3-td-"+i+" x-grid3-cell-first"
+                        ,style:{
+                            height:Ext.fly(h[i]).getHeight() + "px"
+                        }
+                    }]
+                }]
+            });
+        }
+
+        console.log("IH", ih);
+/*
+        lockgrid.on({
+            bodyresize:function() {
+                console.log("resize", el, el.getWidth());
+                ih.setWidth(el.getWidth());
+            }
+        });
+*/
+
+    }
+
     var loadLockData = function() {
         var data = [], index = 0;
         lockedColumns.each(function(col) {
@@ -131,37 +169,8 @@ Ext.onReady(function() {
                     ,rowselect:function(sm, rowIndex, record) {
                         lockgrid.getSelectionModel().selectRow(rowIndex - loadCount);
                     }
-                    ,render:function() {
-                        var h = grid.el.select("div.x-grid3-header-offset table").elements;
-                        var children = [];
-                        for (var i = 0; i < grid.getColumnModel().rows.length; i++) {
-                            children.push({
-                                tag:"div"
-                                ,cls:"x-grid3-header-group-empty"
-                                ,style:{
-                                    height:Ext.fly(h[i]).getHeight() + "px"
-                                }
-                            });
-                        }
-                        var headers = lockgrid.el.select("div.x-grid3-header").elements[0];
-                        var el = Ext.fly(headers).child("div.x-grid3-header-inner");
-                        var width = el.getWidth();
-                        var ih = Ext.fly(headers).insertFirst({
-                            tag:"div"
-                            ,cls:"x-grid3-header-inner"
-                            ,children:children
-                            ,style:{
-                                width:width +"px"
-                            }
-                        });
-                        console.log("IH", ih);
-                        lockgrid.on({
-                            bodyresize:function() {
-                                console.log("resize", el, el.getWidth());
-                                ih.setWidth(el.getWidth());
-                            }
-                        });
-                    }
+                    ,render:renderGroupHeaders
+                    ,reconfigure:renderGroupHeaders
                 }
             });
 
